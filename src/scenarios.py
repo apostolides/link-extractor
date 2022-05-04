@@ -11,15 +11,16 @@ def single_url(url,domains_only=False,extract_all=False,agent=None):
     except:
         return [[],[],[]]
 
-    links, assets, scripts = ex.extract(html,extract_all=True)
+    links, action_links, assets, scripts = ex.extract(html,extract_all=True)
 
     links = filter_dups(links)
     assets = filter_dups(assets)
     scripts = filter_dups(scripts)
+    action_links = filter_dups(action_links)
 
     domains = []
     if domains_only:
-        for coll in [links, assets, scripts]:
+        for coll in [links, action_links, assets, scripts]:
             doms = []
             for domain in coll:
                 if len(filter_domain(domain).strip(' \n\t')) > 1:
@@ -27,7 +28,7 @@ def single_url(url,domains_only=False,extract_all=False,agent=None):
             domains.append(filter_dups(doms))
         return domains
     else:
-        return [links, assets, scripts]
+        return [links, action_links, assets, scripts]
 
 def urls_from_file(file,domains_only=False,extract_all=False,agent=None):
     results = []

@@ -7,6 +7,11 @@ def extract(html,extract_all=False):
     for a in soup.find_all('a',href=True):
         links.append(a['href'])
 
+    action_links = []
+    for form in soup.find_all('form'):
+        if form['action']:
+            action_links.append(form['action'])
+
     assets = []
     scripts = []
 
@@ -16,4 +21,4 @@ def extract(html,extract_all=False):
         for script in soup.find_all('script',src=True):
             scripts.append(script['src'])
     
-    return links, assets, scripts
+    return links, action_links ,assets, scripts
